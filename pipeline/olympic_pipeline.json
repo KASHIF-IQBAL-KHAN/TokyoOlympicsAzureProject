@@ -13,11 +13,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "today's date"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "OlympicsDataFlow",
