@@ -1,0 +1,77 @@
+{
+	"name": "OlympicsDataFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Testing",
+						"type": "DatasetReference"
+					},
+					"name": "Athletes"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "modifiedformulafile",
+					"rejectedDataLinkedService": {
+						"referenceName": "AzureDataLakeStorage1",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "date",
+					"description": "adding date column"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          circuitId as integer '000',",
+				"          circuitRef as string,",
+				"          name as string,",
+				"          location as string,",
+				"          country as string,",
+				"          lat as string,",
+				"          lng as string,",
+				"          alt as string,",
+				"          url as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Athletes",
+				"Athletes derive(Date = currentDate()) ~> date",
+				"date sink(allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     input(",
+				"          circuitId as short,",
+				"          circuitRef as string,",
+				"          name as string,",
+				"          location as string,",
+				"          country as string,",
+				"          lat as double,",
+				"          lng as double,",
+				"          alt as short,",
+				"          url as string",
+				"     ),",
+				"     format: 'delimited',",
+				"     fileSystem: 'demo',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: true,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> modifiedformulafile"
+			]
+		}
+	}
+}
