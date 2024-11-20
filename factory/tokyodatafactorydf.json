@@ -1,0 +1,9 @@
+{
+	"name": "tokyodatafactorydf",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "baf2cd99-afe5-4c13-a817-ed43108820d3",
+		"tenantId": "8e06083a-4219-4ca3-91d4-09f13022ae8d"
+	}
+}
